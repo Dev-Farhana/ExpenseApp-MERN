@@ -31,11 +31,12 @@ const Login = () => {
 
   return (
     <>
-      <div className="register-page d-flex align-items-center justify-content-center ">
+      <div>        
         {loading && <Spinner />}
+      </div>
+      <div className="register-page d-flex align-items-center justify-content-center ">
         <Form layout="vertical" onFinish={submitHandler}>
           <h3> Kindly Login Here!</h3>
-
           <Form.Item
             label="Email"
             name="email"
@@ -59,10 +60,20 @@ const Login = () => {
               },
             ]}
           >
-            <Input />
+            <Input.Password />
           </Form.Item>
 
-          <button className="btn btn-primary"> Submit </button>
+          <Form.Item
+            wrapperCol={{
+              offset: 8,
+              span: 16,
+            }}
+          >
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+
           <div className="d-flex">
             <Link to="/register"> Not a User ? click here to Register!</Link>
           </div>

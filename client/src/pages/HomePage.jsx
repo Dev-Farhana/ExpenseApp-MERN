@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Form, Input, message, Modal, Select, Table } from "antd";
-import {  UnorderedListOutlined,  AreaChartOutlined, DeleteOutlined } from "@ant-design/icons";
+import { DeleteOutlined , PieChartOutlined ,TableOutlined  } from "@ant-design/icons";
 import Layout from "./../components/Layout/Layout";
 import axios from "axios";
 import Spinner from "./../components/Spinner";
@@ -38,12 +38,12 @@ const HomePage = () => {
     },
     {
       title: "Actions",
-      render: (text, record) => (
+      render: (record) => (
         <div>
           <DeleteOutlined
-            className="mx-2 text-danger"
+            className="mx-2 text-danger "
             onClick={() => {
-              handleDelete(record);
+              deleteHandler(record._id);
             }}
           />
         </div>
@@ -74,31 +74,25 @@ const HomePage = () => {
   }, [setAllTransaction]);
 
   //delete handler
- const handleDelete = async (record) => {
-   try {
-     setLoading(true);
-     await axios.delete(
-       "http://localhost:8080/api/v1/transactions/delete-transaction",
-       {
-         data: { transactionId: record._id },
-       }
-     );
-    //  Update state to remove the deleted transaction
-         setAllTransaction((prevTransactions) =>
-           prevTransactions.filter((transaction) => transaction._id !== record._id)
-         );
+ const deleteHandler = async (id) => {
+  try {
+    setLoading(true);    
+    await axios.delete(`http://localhost:8080/api/v1/transactions/${id}`);
      setLoading(false);
-     message.success("Transaction Deleted!");
-   } catch (error) {
-     setLoading(false);
-     console.log(error);
-     message.error("unable to delete");
-   }
+    message.success("Transaction Deleted!");
+    setAllTransaction(
+      allTransaction.filter((transaction) => transaction._id !== id)
+    );
+  } catch (error) {
+    setLoading(false);
+    console.log(error);
+    message.error("Unable to delete transaction");
+  }
  };
 
 
   // form handling
-const handleSubmit = async (values) => {
+ const handleSubmit = async (values) => {
   try {
     const user = JSON.parse(localStorage.getItem("user"));
     setLoading(true);
@@ -120,7 +114,7 @@ const handleSubmit = async (values) => {
     message.error("Please fill all fields");
     console.log(error);
   }
-};
+ };
 
 
   return (
@@ -128,29 +122,25 @@ const handleSubmit = async (values) => {
       {loading && <Spinner />}
       <div className="filters">
         <div className="filters d-flex align-items-center justify-content-evenly p-3 ">
-          <div className="border rounded p-2">
-            <AreaChartOutlined
-              className={`mx-2 ${
-                viewData === "analytics" ? "active-icon" : "inactive-icon"
-              }`}
-              onClick={() => setViewData("analytics")}
-            />
+          <div
+            className="btn border rounded p-2 bg-danger-subtle fw-medium"
+            onClick={() => setViewData("analytics")}
+          >
             {" Graph Form"}
+            <PieChartOutlined />
           </div>
 
-          <div className="border rounded p-2">
-            <UnorderedListOutlined
-              className={`mx-2 ${
-                viewData === "table" ? "active-icon" : "inactive-icon"
-              }`}
-              onClick={() => setViewData("table")}
-            />
+          <div
+            className="btn border rounded-2 p-2 bg-warning-subtle fw-medium"
+            onClick={() => setViewData("table")}
+          >
             {"Table Form"}
+            <TableOutlined />
           </div>
 
           <div>
             <button
-              className="btn btn-primary"
+              className="btn btn-primary fw-medium"
               onClick={() => setShowModal(true)}
             >
               Add New{" "}
@@ -158,14 +148,11 @@ const handleSubmit = async (values) => {
           </div>
         </div>
       </div>
-      <div className="content">
+      <div className="content" >
         {viewData === "table" ? (
           <Table
             columns={column}
-            dataSource={allTransaction.map((item) => ({
-              ...item,
-              key: item._id,
-            }))}
+            dataSource={allTransaction}
           />
         ) : (
           <Analytics allTransaction={allTransaction} />

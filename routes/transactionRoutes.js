@@ -7,7 +7,8 @@ router.post("/get-transaction", getAllTransaction );
 
 router.post("/add-transaction", addTransaction );
 
-router.delete("/delete-transaction", deleteTransaction );
+// router.delete("/delete-transaction", deleteTransaction );
+router.delete("/:id", deleteTransaction);
 
 
 module.exports = router;

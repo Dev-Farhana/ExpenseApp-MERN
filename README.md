@@ -1,8 +1,32 @@
-# React + Vite
+ExpenseApp
+ExpenseApp is a full-stack web application built using the MERN (MongoDB, Express.js, React.js, Node.js) stack. It allows users to manage their expenses efficiently.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Installation:
+To run the ExpenseApp locally, follow these steps:
 
-Currently, two official plugins are available:
+Backend Setup:
+Install dependencies: npm install
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Frontend Setup:
+Navigate to the client directory:
+cd ../client
+Install dependencies: npm install
+
+Usage:
+After installation, you can run the ExpenseApp using the following commands:
+
+Start the Backend Server:
+Run the server: npm run dev
+Start the Frontend Server:
+Navigate to the client directory:
+cd ../client
+Run the client: npm run dev
+
+Technologies Used
+Backend:
+Node.js
+Express.js
+MongoDB
+
+Frontend:
+React.js Vite (for development server)
