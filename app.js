@@ -10,16 +10,6 @@ connectDb();
 const app = express();
 
 app.use(morgan("dev"));
-// app.use(
-//   cors({
-//     origin: "http://localhost:5173",
-//     method: "POST",
-//     credentials: "true",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//   })
-// );
 
 app.use(cors());  
 app.use(express.json());
@@ -30,7 +20,7 @@ app.use("/api/v1/users", require("./routes/userRoute"));
 //for transactions routes;
 app.use("/api/v1/transactions", require("./routes/transactionRoutes"));
 
-const PORT = 8080 || process.env.PORT;
+const PORT = 8082 || process.env.PORT;
 
 app.listen(PORT, () => {
   console.log(`Server is Running on port ${PORT}`);
